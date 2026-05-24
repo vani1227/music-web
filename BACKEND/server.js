@@ -58,7 +58,7 @@ const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ✅ Serve frontend songs folder
-app.use("/songs", express.static(path.join(__dirname, "FRONTEND/songs")));
+app.use("/songs", express.static(path.join(__dirname, "songs")));
 
 // ✅ Routes
 app.use("/api/auth", authRoutes);
