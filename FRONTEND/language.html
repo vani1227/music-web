@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Language</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      color: #00ffff;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    h1::before {
+      content: "🎧";
+      font-size: 2rem;
+    }
+
+    .language-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    .lang-box {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 30px 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      border: 2px solid transparent;
+    }
+
+    .lang-box:hover {
+      transform: scale(1.07);
+      background: rgba(255, 255, 255, 0.25);
+      border-color: #00ffff;
+      box-shadow: 0 12px 25px rgba(0,255,255,0.4);
+    }
+
+    .lang-box img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #b0c4de;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Choose a Language to Listen Songs</h1>
+
+  <div class="language-container">
+    <div class="lang-box" onclick="selectLanguage('English')">
+      <img src="https://flagcdn.com/w80/gb.png" alt="English Flag">
+      English
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Telugu')">
+      <img src="https://flagcdn.com/w80/in.png" alt="Telugu Flag">
+      Telugu
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Hindi')">
+      <img src="https://flagcdn.com/w80/in.png" alt="Hindi Flag">
+      Hindi
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Tamil')">
+      <img src="https://flagcdn.com/w80/in.png" alt="Tamil Flag">
+      Tamil
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Malayalam')">
+      <img src="https://flagcdn.com/w80/in.png" alt="Malayalam Flag">
+      Malayalam
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Kannada')">
+      <img src="https://flagcdn.com/w80/in.png" alt="Kannada Flag">
+      Kannada
+    </div>
+    <div class="lang-box" onclick="selectLanguage('Spanish')">
+      <img src="https://flagcdn.com/w80/es.png" alt="Spanish Flag">
+      Spanish
+    </div>
+    <div class="lang-box" onclick="selectLanguage('French')">
+      <img src="https://flagcdn.com/w80/fr.png" alt="French Flag">
+      French
+    </div>
+  </div>
+
+  <footer>🎵 Music App © 2025 | Made with 💙</footer>
+
+  <script>
+    function selectLanguage(language) {
+      localStorage.setItem("selectedLanguage", language);
+      window.location.href = "playlist.html";
+    }
+  </script>
+</body>
+</html>

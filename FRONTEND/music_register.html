@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music App | Register</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #00ffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+    }
+    .register-container {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 40px 50px;
+      border-radius: 15px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+    .register-container h2 {
+      color: #00ffff;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #222;
+      color: #fff;
+    }
+    input:focus {
+      border: 2px solid #00ffff;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00ffff;
+      border: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00ffff;
+    }
+    p {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #ccc;
+    }
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>🎶 Create Account</h2>
+    <form id="registerForm">
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="fullname" required placeholder="Your Name" />
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" required placeholder="Your Email" />
+      </div>
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" id="username" required placeholder="Choose Username" />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" required placeholder="Create Password" />
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fullname = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fullname, email, username, password }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert("Registration Successful!");
+          window.location.href = "login.html";
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert("Server Error. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html>

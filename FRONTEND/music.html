@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Music List</title>
+  <link rel="stylesheet" href="style.css">
+   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1db954">
+</head>
+<body>
+  <div id="navbarContainer"></div>
+
+<script>
+  // Load navbar.html into the page dynamically
+  fetch("navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbarContainer").innerHTML = data;
+    });
+</script>
+
+  <h2>Welcome, <span id="user"></span> 🎶</h2>
+<button onclick="toggleSmartSleep()">Smart Sleep</button> <!-- ADD HERE -->
+<button onclick="window.location.href='upload.html'">Go to Upload Page</button>
+
+ <div id="songsList"></div>
+
+  <script>
+    document.getElementById("user").innerText = localStorage.getItem("username");
+    async function loadSongs() {
+      const res = await fetch("http://localhost:5000/api/uploads");
+      const songs = await res.json();
+      const div = document.getElementById("songsList");
+      div.innerHTML = "";
+      songs.forEach(song => {
+        div.innerHTML += `
+          <div>
+            <p><b>${song.title}</b> (Likes: ${song.likes})</p>
+            <audio controls src="http://localhost:5000${song.fileUrl}"></audio><br>
+            <button onclick="likeSong('${song._id}')">❤️ Like</button>
+          </div><hr>`;
+      });
+        attachAudioListeners();
+    }
+
+    async function likeSong(id) {
+      await fetch(`http://localhost:5000/api/uploads/${id}/like`, { method: "PUT" });
+      loadSongs();
+    }
+
+    loadSongs();
+
+    let inactivityTime = 0;
+    let sleepThreshold = 300; // 5 minutes
+    let timerInterval;
+    let sleepEnabled = true;
+
+    // Reset inactivity on activity
+    function resetTimer() {
+      inactivityTime = 0;
+    }
+
+    document.addEventListener("mousemove", resetTimer);
+    document.addEventListener("keypress", resetTimer);
+    document.addEventListener("click", resetTimer);
+
+    // Start sleep detection
+    function startSmartSleep() {
+      clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        inactivityTime++;
+
+        if (sleepEnabled && inactivityTime >= sleepThreshold) {
+
+          // Pause ALL audio players
+          document.querySelectorAll("audio").forEach(audio => {
+            audio.pause();
+          });
+
+          alert("😴 Music paused due to inactivity (Smart Sleep Detection)");
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    }
+
+    // Attach to all audio elements
+    function attachAudioListeners() {
+      document.querySelectorAll("audio").forEach(audio => {
+
+        audio.addEventListener("play", () => {
+          startSmartSleep();
+        });
+
+        audio.addEventListener("pause", () => {
+          clearInterval(timerInterval);
+        });
+
+      });
+    }
+
+    // Toggle Smart Sleep
+    function toggleSmartSleep() {
+      sleepEnabled = !sleepEnabled;
+      alert("Smart Sleep " + (sleepEnabled ? "Enabled" : "Disabled"));
+    }
+
+    // ===== PWA SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log("Service Worker Registered"));
+}
+  </script>
+</body>
+</html>

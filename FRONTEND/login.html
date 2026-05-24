@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music App | Login</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(rgba(0, 0, 0, 0.6), rgba(5, 10, 25, 0.9)),
+      url("https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=1470&q=80");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  .login-container {
+    background: rgba(12, 18, 40, 0.9);
+    border-radius: 20px;
+    padding: 45px 55px;
+    box-shadow: 0 0 40px rgba(0, 255, 200, 0.25), 0 0 80px rgba(0, 150, 255, 0.15);
+    text-align: center;
+    color: #fff;
+    width: 380px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h2 {
+    color: #00ffc6;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  h2::before {
+    content: "🎧";
+    font-size: 1.3em;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 1em;
+  }
+
+  button {
+    width: 100%;
+    background: linear-gradient(135deg, #00c3ff, #00ffb8);
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    color: #000;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 200, 0.4);
+  }
+
+  .footer-links {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #a0f0ff;
+  }
+
+  .footer-links a {
+    color: #00ffe0;
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  /* Animated vinyl disk in background */
+  .vinyl {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1a1a1a 30%, #111 70%);
+    border: 6px solid rgba(0, 255, 255, 0.15);
+    animation: spin 12s linear infinite;
+    opacity: 0.3;
+    top: 10%;
+    left: 15%;
+  }
+
+  .vinyl::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #00ffff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+  
+  <div class="login-container">
+    <h2>🎵 Music App Login</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter username" required />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password" required />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>Forgot Password? <a href="#">Click Here</a></p>
+    <p>New user? <a href="music_register.html">Create an account</a></p>
+  </div>
+
+
+
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert("Login Successful!");
+          // window.location.href = "music_dashboard.html";
+          window.location.href = "language.html";
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert("Server Error. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music App | Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg,rgb(255, 255, 255));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: black;
+    }
+    .login-container {
+      background: rgba(252, 252, 252, 0.75);
+      padding: 40px 50px;
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(49, 13, 230, 0.4);
+      text-align: center;
+    }
+    .login-container h2 {
+      margin-bottom: 25px;
+      color: #1db954;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #0bb348;
+      color: whitesmoke;
+      font-size: 14px;
+    }
+    input:focus {
+      border: 2px solid #1db954;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1db954;
+      border: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #17a94a;
+    }
+    p {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #ccc;
+    }
+    a {
+      color: #1db954;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>🎵 Music App Login</h2>
+    <form id="loginForm">
+      <div class="input-group">
+        <label style="color: black;">Username or Email</label>
+        <input type="text" id="username" placeholder="Enter username" required />
+      </div>
+      <div class="input-group">
+        <label style="color: black;">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>Forgot Password? <a href="#">Click Here</a></p>
+    <p>New user? <a href="music_register.html">Create an account</a></p>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert("Login Successful!");
+          window.location.href = "music_dashboard.html";
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert("Server Error. Please try again later.");
+      }
+    });
+  </script>
+</body>
+</html> 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music App Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <h2>🎵 Music App Login</h2>
+    <input type="text" id="username" placeholder="Enter username">
+    <input type="password" id="password" placeholder="Enter password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html> --> 

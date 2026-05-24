@@ -1,0 +1,156 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Subscription Activated!</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: white;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+      color: #e0ffff;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 60px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffe0, 0 0 20px #00e0ff; }
+      to { text-shadow: 0 0 25px #00ffcc, 0 0 45px #00ccff; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 12px 30px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(90deg, #00f7ff, #007aff);
+    }
+
+    .sparkles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 3s linear infinite;
+    }
+
+    @keyframes sparkle {
+      from { transform: translateY(100vh) scale(0); opacity: 1; }
+      to { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      color: #fffacd;
+    }
+  </style>
+</head>
+<body>
+<div id="navbarContainer"></div>
+
+<script>
+  // Load navbar.html into the page dynamically
+  fetch("navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbarContainer").innerHTML = data;
+    });
+</script>
+
+  <div class="sparkles"></div>
+
+  <div class="card">
+    <h1>💎 Subscription Activated!</h1>
+    <h2>You’ve unlocked 5 days of Premium Access</h2>
+    <p>No Ads • Free Hello Tune • Premium Playlists</p>
+    <button class="btn" onclick="goToPlayer()">🎶 Go to Music Player</button>
+  </div>
+
+  <footer>Redirecting to your music world in <span id="countdown">5</span> seconds...</footer>
+
+  <script>
+    // Floating sparkles animation
+    const sparklesContainer = document.querySelector(".sparkles");
+    for (let i = 0; i < 30; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.style.left = Math.random() * 100 + "%";
+      s.style.animationDuration = 2 + Math.random() * 3 + "s";
+      s.style.animationDelay = Math.random() * 2 + "s";
+      sparklesContainer.appendChild(s);
+    }
+
+    // Redirect countdown
+    let seconds = 5;
+    const countdown = document.getElementById("countdown");
+    const interval = setInterval(() => {
+      seconds--;
+      countdown.textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        goToPlayer();
+      }
+    }, 1000);
+
+    function goToPlayer() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html> 
+
+

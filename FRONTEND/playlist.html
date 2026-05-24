@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Music Playlist</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #00ffff;
+    }
+    h2 {
+      color: #bde0fe;
+      margin-bottom: 25px;
+    }
+    .playlist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .song-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 15px;
+      width: 280px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      transition: transform 0.25s;
+    }
+    .song-card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.25);
+    }
+    .song-card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+    .song-title {
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+    }
+    .song-artist {
+      color: #d6e0f0;
+      margin-bottom: 10px;
+    }
+    audio {
+      width: 100%;
+      outline: none;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00c6ff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #0072ff;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="navbarContainer"></div>
+
+<script>
+  // Load navbar.html into the page dynamically
+  fetch("navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbarContainer").innerHTML = data;
+    });
+</script>
+
+  <h1>🎶 Welcome to Music World</h1>
+  <h2 id="langTitle">Loading...</h2>
+
+  <div class="playlist" id="songsList"></div>
+
+  <div>
+    <button onclick="window.location.href='upload.html'">⬆️ Upload Your Own Song</button>
+    <button onclick="window.location.href='language.html'">🌐 Back to Language Selection</button>
+  </div>
+
+  <script>
+  const lang = localStorage.getItem("selectedLanguage");
+  const langTitle = document.getElementById("langTitle");
+  const songsList = document.getElementById("songsList");
+
+  // ✅ Use localhost file paths instead of expired URLs
+  const defaultSongs = {
+    Telugu: [
+      {
+        title: "Butta Bomma",
+        artist: "Armaan Malik",
+        cover: "https://i.scdn.co/image/ab67616d0000b2735d506b5ddf8cfde260fe56a7",
+        fileUrl: "songs/buttabomma.mp3"
+      },
+      {
+        title: "Samajavaragamana",
+        artist: "Sid Sriram",
+        cover: "https://i.scdn.co/image/ab67616d0000b273b16a482c8f58b06b7c6b2668",
+        fileUrl: "songs/samajavaragamana.mp3"
+      },
+      {
+        title: "Inkem Inkem Kaavaale",
+        artist: "Sid Sriram",
+        cover: "https://i.scdn.co/image/ab67616d0000b273f05e72ce7acdc1781edb1ff9",
+        fileUrl: "songs/inkem.mp3"
+      }
+    ],
+    English: [
+      {
+        title: "On My Way",
+        artist: "Alan Walker",
+        cover: "https://i.scdn.co/image/ab67616d0000b2734037d0c833f8a6b205e3e5a4",
+        fileUrl: "songs/sample.mp3"
+      }
+    ]
+  };
+
+  if (!lang) {
+    langTitle.textContent = "No language selected!";
+  } else {
+    langTitle.textContent = `🎧 Songs in ${lang}`;
+    loadSongs(lang);
+  }
+
+  function loadSongs(language) {
+    const songs = defaultSongs[language] || [];
+    songsList.innerHTML = "";
+
+    songs.forEach(song => {
+      const div = document.createElement("div");
+      div.classList.add("song-card");
+      div.innerHTML = `
+        <img src="${song.cover}" alt="${song.title}">
+        <div class="song-title">${song.title}</div>
+        <div class="song-artist">${song.artist}</div>
+        <audio controls>
+          <source src="${song.fileUrl}" type="audio/mpeg">
+          Your browser does not support the audio tag.
+        </audio>
+      `;
+      songsList.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Music Playlist</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #00ffff;
+    }
+    h2 {
+      color: #bde0fe;
+      margin-bottom: 25px;
+    }
+    .playlist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .song-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 15px;
+      width: 280px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      transition: transform 0.25s;
+    }
+    .song-card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.25);
+    }
+    .song-card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+    .song-title {
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+    }
+    .song-artist {
+      color: #d6e0f0;
+      margin-bottom: 10px;
+    }
+    audio {
+      width: 100%;
+      outline: none;
+      margin-bottom: 8px;
+    }
+    select {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00c6ff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #0072ff;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>🎶 Welcome to Music World</h1>
+  <h2 id="langTitle">Loading...</h2>
+
+  <div class="playlist" id="songsList"></div>
+
+  <div>
+    <button onclick="window.location.href='upload.html'">⬆️ Upload Your Own Song</button>
+    <button onclick="window.location.href='language.html'">🌐 Back to Language Selection</button>
+  </div>
+
+  <script>
+    const lang = localStorage.getItem("selectedLanguage");
+    const langTitle = document.getElementById("langTitle");
+    const songsList = document.getElementById("songsList");
+
+    // ✅ Localhost song paths
+    const defaultSongs = {
+      Telugu: [
+        {
+          title: "Butta Bomma",
+          artist: "Armaan Malik",
+          cover: "https://i.scdn.co/image/ab67616d0000b2735d506b5ddf8cfde260fe56a7",
+          fileUrl: "http://localhost:5000/songs/buttabomma.mp3"
+        },
+        {
+          title: "Samajavaragamana",
+          artist: "Sid Sriram",
+          cover: "https://i.scdn.co/image/ab67616d0000b273b16a482c8f58b06b7c6b2668",
+          fileUrl: "http://localhost:5000/songs/samajavaragamana.mp3"
+        },
+        {
+          title: "Inkem Inkem Kaavaale",
+          artist: "Sid Sriram",
+          cover: "https://i.scdn.co/image/ab67616d0000b273f05e72ce7acdc1781edb1ff9",
+          fileUrl: "http://localhost:5000/songs/inkem.mp3"
+        }
+      ],
+      English: [
+        {
+          title: "On My Way",
+          artist: "Alan Walker",
+          cover: "https://i.scdn.co/image/ab67616d0000b2734037d0c833f8a6b205e3e5a4",
+          fileUrl: "http://localhost:5000/songs/sample.mp3"
+        }
+      ]
+    };
+
+    if (!lang) {
+      langTitle.textContent = "No language selected!";
+    } else {
+      langTitle.textContent = `🎧 Songs in ${lang}`;
+      loadSongs(lang);
+    }
+
+    function loadSongs(language) {
+      const songs = defaultSongs[language] || [];
+      songsList.innerHTML = "";
+
+      songs.forEach(song => {
+        const div = document.createElement("div");
+        div.classList.add("song-card");
+        div.innerHTML = `
+          <img src="${song.cover}" alt="${song.title}">
+          <div class="song-title">${song.title}</div>
+          <div class="song-artist">${song.artist}</div>
+          <audio controls id="audio-${song.title.replace(/\s+/g, '')}">
+            <source src="${song.fileUrl}" type="audio/mpeg">
+            Your browser does not support the audio tag.
+          </audio>
+          <label>Playback Speed:</label>
+          <select onchange="changeSpeed('${song.title.replace(/\s+/g, '')}', this.value)">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x (Normal)</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        `;
+        songsList.appendChild(div);
+      });
+    }
+
+    function changeSpeed(songId, speed) {
+      const audio = document.getElementById(`audio-${songId}`);
+      if (audio) {
+        audio.playbackRate = parseFloat(speed);
+      }
+    }
+  </script>
+</body>
+</html> -->
